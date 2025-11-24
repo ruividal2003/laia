@@ -6,7 +6,7 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from src.features import haversine  # já existe no teu ficheiro features
+from src.features import haversine
 
 
 app = FastAPI(title="NYC Taxi Trip Duration API")
