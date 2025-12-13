@@ -26,6 +26,8 @@ class Configs:
     SEED: int
     TEST_SIZE: float
 
+    MODEL_PATH: str
+
 def load_configs() -> Configs:
     """
     Read environment variables and loads them into a 'Configs' class instance.
@@ -64,6 +66,8 @@ def load_configs() -> Configs:
     seed=int(os.getenv("SEED", 42))
     test_size=float(os.getenv("TEST_SIZE", 0.2))
     
+    model_path = os.getenv("MODEL_PATH", "artifacts/model.pkl")
+    
     return Configs(
         COMMIT_SHA=commit_sha,
         MODEL_NAME=model_name,
@@ -76,7 +80,7 @@ def load_configs() -> Configs:
         MAX_TEST_ROWS=max_test_rows,
         SEED=seed,
         TEST_SIZE=test_size,
+        MODEL_PATH=model_path
     )
 
-if __name__ == "__main__":
-    configs = load_configs()
+configs = load_configs()

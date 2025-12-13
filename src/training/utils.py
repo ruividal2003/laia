@@ -8,7 +8,7 @@ from sklearn.linear_model import Ridge
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from config import configs
+from .config import configs
 
 logging.basicConfig(filename="logs.log",
                     level=logging.INFO,
@@ -99,13 +99,13 @@ def print_and_log(content: str, level):
     valid_levels = ["info", "warning", "error"]
     match level:
         case "info":
-            print(f"{type}: {content}")
+            print(f"{str(level).upper()}: {content}")
             logger.info(content)
         case "warning":
-            print(f"{type}: {content}")
+            print(f"{str(level).upper()}: {content}")
             logger.warning(content)
         case "error":
-            print(f"{type}: {content}")
+            print(f"{str(level).upper()}: {content}")
             logger.error(content) 
         case _:
             raise Exception("Invalid log level")

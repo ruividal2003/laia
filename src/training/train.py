@@ -7,8 +7,8 @@ import mlflow
 from math import sqrt
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.model_selection import KFold, cross_validate
-from utils import *
-from config import configs
+from .utils import *
+from .config import configs
 
 def train_model():
     # Setup MLFlow to use local server
@@ -28,7 +28,7 @@ def train_model():
     y_val = df_val["duration_min"]
 
     # Run
-    with mlflow.start_run() as run:
+    with mlflow.start_run():
         print_and_log("Training started", "info")
         pipe = build_pipeline()
 
@@ -57,8 +57,13 @@ def train_model():
 
         mlflow.log_metric("VAL_MAE", val_mae)
         mlflow.log_metric("VAL_RMSE", val_rmse)
-        
+
         mlflow.log_param("alpha", pipe.named_steps["model"].alpha)
         mlflow.sklearn.log_model(pipe, "model")
-
+        
         os.makedirs("artifacts", exist_ok=True)
+        joblib.dump(pipe, configs.MODEL_PATH)
+        print_and_log(f"Model saved on {configs.MODEL_PATH}.")
+
+if __name__ == "__main__":
+    train_model()
