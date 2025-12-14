@@ -17,6 +17,12 @@ logging.basicConfig(filename="logs.log",
 logger = logging.getLogger(__name__)
 
 def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
+    """
+    Load training and validation data from remote Parquet files.
+    
+    Returns:
+        Tuple of (training_df, validation_df)
+    """
     df_train_list = []
     df_validation_list = []
 
@@ -44,6 +50,16 @@ def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     return pd.concat(df_train_list, ignore_index=True), pd.concat(df_validation_list, ignore_index=True)
 
 def build_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Clean and engineer features from raw taxi trip data.
+    Calculates duration, extracts time features, filters outliers.
+    
+    Args:
+        df: Raw taxi trip DataFrame
+    
+    Returns:
+        Processed DataFrame with engineered features
+    """
     df = df.rename(
         columns={
             "tpep_pickup_datetime": "pickup_datetime",
@@ -96,6 +112,13 @@ def build_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df[existing_cols].dropna()
 
 def print_and_log(content: str, level):
+    """
+    Print message to console and write to log file.
+    
+    Args:
+        content: Message to log
+        level: Log level ('info', 'warning', or 'error')
+    """
     valid_levels = ["info", "warning", "error"]
     match level:
         case "info":
@@ -111,6 +134,12 @@ def print_and_log(content: str, level):
             raise Exception("Invalid log level")
         
 def build_pipeline() -> Pipeline:
+    """
+    Create scikit-learn pipeline with StandardScaler and Ridge regression.
+    
+    Returns:
+        Configured Pipeline object
+    """
     num_features = [
         "trip_distance",
         "hav_km",

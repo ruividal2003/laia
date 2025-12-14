@@ -6,6 +6,10 @@ MODEL_PATH = "artifacts/model.pkl"
 TEST_FILE = "data/testing_data/yellow_tripdata_2013-01.parquet"
 
 def main():
+    """
+    Load model and test predictions on sample real taxi trip data.
+    Prints comparison of actual vs predicted trip durations.
+    """
     print("Loading model...")
     model = joblib.load(MODEL_PATH)
 

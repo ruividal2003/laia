@@ -11,6 +11,12 @@ from .utils import *
 from .config import configs
 
 def train_model():
+    """
+    Train Ridge regression model on NYC taxi data.
+    Performs cross-validation, logs metrics to MLflow, and saves model.
+    
+    Returns: None (saves model to disk and MLflow)
+    """
     # Setup MLFlow to use local server
     mlflow_uri = configs.MLFLOW_TRACKING_URI
     mlflow.set_tracking_uri(mlflow_uri)

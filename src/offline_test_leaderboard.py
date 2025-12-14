@@ -4,23 +4,14 @@ import pandas as pd
 
 def build_features_from_leaderboard_payload(payload: dict) -> pd.DataFrame:
     """
-    Convert a leaderboard-style payload into the feature dataframe
-    expected by your trained model.
-
-    Payload format (like example_endpoint.py):
-    {
-        "data": [
-            {
-                "VendorID": 2,
-                "tpep_pickup_datetime": "2011-01-01 00:10:00",
-                "passenger_count": 4,
-                "trip_distance": 1.0,
-                "PULocationID": 145,
-                "DOLocationID": 145
-            },
-            ...
-        ]
-    }
+    Convert leaderboard-style JSON to feature DataFrame for model.
+    Extracts time features and converts distance to kilometers.
+    
+    Args:
+        payload: Dict with 'data' key containing list of trip records
+    
+    Returns:
+        DataFrame with model features
     """
     records = []
 

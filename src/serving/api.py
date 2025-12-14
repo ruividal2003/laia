@@ -15,7 +15,12 @@ app = FastAPI(title="NYC Taxi Trip Duration API (Leaderboard-Compatible)")
 _MODEL = None
 
 def get_model():
-    """Lazy load do modelo."""
+    """
+    Lazy load trained model from disk.
+    
+    Returns:
+        Loaded sklearn Pipeline model
+    """
     global _MODEL
     if _MODEL is None:
         model_path = os.getenv("MODEL_PATH", "artifacts/model.pkl")
@@ -54,18 +59,25 @@ class LeaderboardRequest(BaseModel):
 
 @app.get("/health")
 def health():
-    # Match the example endpoint's response as closely as possible
+    """
+    Health check endpoint.
+    
+    Returns:
+        JSON with status indicator
+    """
     return {"status": "ok"}
 
 
 @app.post("/predict")
 def predict(payload: LeaderboardRequest):
     """
-    Leaderboard-compatible prediction endpoint.
-
-    Input:  { "data": [ { VendorID, tpep_pickup_datetime, passenger_count,
-                          trip_distance, PULocationID, DOLocationID }, ... ] }
-    Output: { "predictions": [ ... ] }
+    Predict trip duration for taxi trips.
+    
+    Args:
+        payload: LeaderboardRequest with list of trip records
+    
+    Returns:
+        JSON with predictions array (duration in minutes)
     """
 
     records = []
