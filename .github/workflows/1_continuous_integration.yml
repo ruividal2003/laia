@@ -19,12 +19,13 @@ env:
   MLFLOW_EXPERIMENT_NAME: ${{ vars.MLFLOW_EXPERIMENT_NAME }}
   MLFLOW_MODEL_NAME: ${{ vars.MLFLOW_MODEL_NAME }}
 
-  TRAIN_PATH: "2011,2012"
-  VALIDATION_PATH: 2013
+  BASE_URL: https://d37ci6vzurychx.cloudfront.net/trip-data
+  TRAIN_DATA: 2011,2012
+  VALIDATION_DATA: 2013
   SEED: 42
   TEST_SIZE: 0.2
-  MAX_TRAIN_ROWS: 20000000
-  MAX_TEST_ROWS: 10000000
+
+  MODEL_PATH: artifacts/model.pkl
 
 jobs:
   test-unit:
@@ -75,10 +76,10 @@ jobs:
 
       - name: Push training image
         run: |
-          docker tag training:${{ github.sha }} ${{ env.REGISTRY }}/${{ github.repository }}/training:${{ github.sha }}
-          docker push ${{ env.REGISTRY }}/${{ github.repository }}/training:${{ github.sha }}
+          docker tag training:${{ github.sha }} ${{ env.REGISTRY }}/${{ github.repository }}/src/training:${{ github.sha }}
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}/src/training:${{ github.sha }}
 
       - name: Push serving staging image
         run: |
-          docker tag serving:${{ github.sha }} ${{ env.REGISTRY }}/${{ github.repository }}/serving:${{ github.sha }}
-          docker push ${{ env.REGISTRY }}/${{ github.repository }}/serving:${{ github.sha }}
+          docker tag serving:${{ github.sha }} ${{ env.REGISTRY }}/${{ github.repository }}/src/serving:${{ github.sha }}
+          docker push ${{ env.REGISTRY }}/${{ github.repository }}/src/serving:${{ github.sha }}

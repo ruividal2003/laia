@@ -4,3 +4,4 @@ mlruns/
 .env
 artifacts/
 *.pyc
+*.log

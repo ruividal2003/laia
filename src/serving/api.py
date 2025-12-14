@@ -6,6 +6,7 @@ import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
+import uvicorn
 
 # from src.features import haversine  # not needed for leaderboard input right now
 
@@ -101,7 +102,6 @@ def predict(payload: LeaderboardRequest):
 
 
 if __name__ == "__main__":
-    import uvicorn
 
     port = int(os.getenv("PORT", 9001))
     uvicorn.run(app, host="0.0.0.0", port=port)
