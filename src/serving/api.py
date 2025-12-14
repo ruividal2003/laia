@@ -55,7 +55,7 @@ class LeaderboardRequest(BaseModel):
 @app.get("/health")
 def health():
     # Match the example endpoint's response as closely as possible
-    return {"status": "healthy"}
+    return {"status": "ok"}
 
 
 @app.post("/predict")
