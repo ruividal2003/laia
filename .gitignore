@@ -5,5 +5,3 @@ mlruns/
 artifacts/
 *.pyc
 *.log
-training/
-testing/
