@@ -32,15 +32,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: '3.10' }
+        with: { python-version: "3.10" }
       - run: pip install uv
-      
+
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      - run: docker compose up -d
+
       - run: docker pull ${{ env.REGISTRY }}/${{ github.repository }}/src/training:${{ github.sha }}
 
       - name: Run training
@@ -66,7 +68,7 @@ jobs:
             -e TEST_SIZE \
             -e MODEL_PATH \
             ${{ env.REGISTRY }}/${{ github.repository }}/src/training:${{ github.sha }}
-      
+
       - run: docker pull ${{ env.REGISTRY }}/${{ github.repository }}/src/serving:${{ github.sha }}
 
       - name: Start serving container
@@ -86,11 +88,10 @@ jobs:
             -e MODEL_ALIAS \
             -e MLFLOW_MODEL_NAME \
             ${{ env.REGISTRY }}/${{ github.repository }}/src/serving:${{ github.sha }}
-      
+
       - name: Run staging tests
         run: uv runpytest tests/test_api
 
-      
       - uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
