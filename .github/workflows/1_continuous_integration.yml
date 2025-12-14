@@ -7,9 +7,9 @@ permissions:
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   workflow_dispatch:
 
@@ -28,20 +28,19 @@ env:
   MODEL_PATH: artifacts/model.pkl
 
 jobs:
-
   test-unit:
-    runs-on: [self-hosted, linux, x64, deploy]
+    runs-on: [self-hosted, linux, x6]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: '3.13' }
+        with: { python-version: "3.13" }
       - run: pip install uv
       - run: uv sync --dev
       - run: uv run pytest tests/test_api.py -v
       - run: uv run pytest tests/test_train.py -v
-  
+
   build-images:
-    runs-on: [self-hosted, linux, x64, deploy]
+    runs-on: [self-hosted, linux, x64]
     needs: test-unit
     steps:
       - uses: actions/checkout@v4
