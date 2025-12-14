@@ -15,4 +15,4 @@ EXPOSE 9001
 
 ENV MODEL_PATH=/app/artifacts/model.pkl
 
-CMD ["uv", "run", "uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "9001"]
+CMD ["uv", "run", "uvicorn", "src.serving.api:app", "--host", "0.0.0.0", "--port", "9001"]
