@@ -1,6 +1,6 @@
 import joblib
 import pandas as pd
-from training.utils import prepare_dataframe
+from src.training.utils import build_dataframe
 
 MODEL_PATH = "artifacts/model.pkl"
 TEST_FILE = "data/testing_data/yellow_tripdata_2013-01.parquet"
@@ -13,8 +13,8 @@ def main():
     df_raw = pd.read_parquet(TEST_FILE)
 
     # Prepare features/target exactly like in training
-    df = prepare_dataframe(df_raw)
-    print(f"Rows after prepare_dataframe: {len(df)}")
+    df = build_dataframe(df_raw)
+    print(f"Rows after build_dataframe: {len(df)}")
 
     X = df.drop(columns=["duration_min"])
     y_true = df["duration_min"]
