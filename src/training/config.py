@@ -10,7 +10,6 @@ class Configs:
     Datalass for configuration.
     """
     # Runtime configs
-    COMMIT_SHA: str
     MODEL_NAME: str
     EXPERIMENT_NAME: str
     MLFLOW_TRACKING_URI: str
@@ -36,9 +35,6 @@ def load_configs() -> Configs:
     """
 
     # Runtime
-    commit_sha = os.getenv("COMMIT_SHA")
-    if not commit_sha:
-        raise EnvironmentError("Missing required env var: COMMIT_SHA")
     model_name = os.getenv("MLFLOW_MODEL_NAME")
     if not model_name:
         raise EnvironmentError("Missing required env var: MLFLOW_MODEL_NAME")
@@ -69,7 +65,6 @@ def load_configs() -> Configs:
     model_path = os.getenv("MODEL_PATH", "artifacts/model.pkl")
     
     return Configs(
-        COMMIT_SHA=commit_sha,
         MODEL_NAME=model_name,
         EXPERIMENT_NAME=experiment_name,
         MLFLOW_TRACKING_URI=tracking_uri,
