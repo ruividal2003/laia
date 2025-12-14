@@ -17,7 +17,7 @@ logging.basicConfig(filename="logs.log",
                     )
 logger = logging.getLogger(__name__)
 
-"""def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
+def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     df_train_list = []
     df_validation_list = []
 
@@ -42,18 +42,9 @@ logger = logging.getLogger(__name__)
             except Exception as e:
                 print_and_log(f"Could not load {url}: {e}", "error")
     
-    return pd.concat(df_train_list, ignore_index=True), pd.concat(df_validation_list, ignore_index=True)"""
+    return pd.concat(df_train_list, ignore_index=True), pd.concat(df_validation_list, ignore_index=True)
     
-def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """
-    Load training and validation data from LOCAL parquet files instead of URLs.
-
-      - training/*.parquet   -> 2011–2012 data (train)
-      - testing/*.parquet    -> 2013 data (validation/test)
-
-    If you use different folder names, set them in config.py as:
-      configs.TRAIN_DIR and configs.VALIDATION_DIR
-    """
+"""def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
     train_dir = getattr(configs, "TRAIN_DIR", "training")
     val_dir = getattr(configs, "VALIDATION_DIR", "testing")
 
@@ -97,7 +88,7 @@ def load_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
         f"Loaded {len(df_val)} validation rows from {len(val_files)} files.", "info"
     )
 
-    return df_train, df_val
+    return df_train, df_val"""
 
 def build_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     df = df.rename(
